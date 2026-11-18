@@ -3,34 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-<meta name="theme-color" content="#0f1115">
+<meta name="theme-color" content="#0b0d10">
 <title>Калорийка</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0f1115;color:#fff;font-family:system-ui,sans-serif;padding:16px;max-width:480px;margin:0 auto}
-h1{font-size:22px;margin-bottom:12px}
-.card{background:#1a1d24;border-radius:16px;padding:16px;margin-bottom:12px}
-input,select{width:100%;padding:12px;margin:6px 0;border-radius:10px;border:1px solid #333;background:#0f1115;color:#fff;font-size:16px}
-button{width:100%;padding:16px;border:0;border-radius:14px;background:#4ade80;color:#000;font-size:18px;font-weight:700;margin-top:8px}
-button.sec{background:#2a2e38;color:#fff;font-size:14px;padding:10px}
-.ring{text-align:center;font-size:44px;font-weight:800}
-.sub{text-align:center;color:#9aa0ab;font-size:14px}
-.bar{height:10px;background:#2a2e38;border-radius:6px;margin:4px 0 10px}
-.bar div{height:100%;background:#4ade80;border-radius:6px;width:0}
-.row{display:flex;justify-content:space-between;font-size:14px}
-.meal{padding:8px 0;border-bottom:1px solid #2a2e38;font-size:14px}
+:root{--bg:#0b0d10;--card:#151922;--card2:#1c212c;--line:#262c39;--text:#f2f5f8;--muted:#8b93a3;--green:#4ade80;--green2:#22c55e;--prot:#60a5fa;--fat:#fbbf24;--carb:#f472b6}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;padding:18px 16px 40px;max-width:480px;margin:0 auto}
+h1{font-size:26px;font-weight:800;letter-spacing:-.5px}
+.top{margin-bottom:16px}
+.top .date{color:var(--muted);font-size:14px;margin-top:2px}
+.card{background:var(--card);border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:0 6px 20px rgba(0,0,0,.35)}
+.card h2{font-size:16px;font-weight:700;margin-bottom:10px}
+.card.glow{background:linear-gradient(160deg,#16211b,#151922 60%)}
+input,select{width:100%;padding:14px;margin:6px 0;border-radius:14px;border:1px solid var(--line);background:var(--card2);color:var(--text);font-size:16px;outline:none}
+input:focus,select:focus{border-color:var(--green)}
+button{width:100%;padding:16px;border:0;border-radius:16px;background:linear-gradient(135deg,var(--green),var(--green2));color:#04210f;font-size:17px;font-weight:800;margin-top:8px}
+button:active{transform:scale(.98)}
+button.sec{background:var(--card2);color:var(--muted);font-size:14px;font-weight:600;padding:12px}
+.ringwrap{position:relative;width:200px;height:200px;margin:4px auto 8px}
+.ringwrap svg{width:200px;height:200px;transform:rotate(-90deg)}
+.ringwrap .bg{stroke:var(--card2)}
+.ringwrap .fg{stroke:var(--green);transition:stroke-dashoffset .6s ease}
+.ringtxt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ringtxt .big{font-size:40px;font-weight:800;letter-spacing:-1px}
+.ringtxt .small{font-size:13px;color:var(--muted);margin-top:2px}
+.sub{text-align:center;color:var(--muted);font-size:14px;line-height:1.4}
+.macro{margin-bottom:12px}
+.macro:last-child{margin-bottom:0}
+.mrow{display:flex;justify-content:space-between;font-size:14px;margin-bottom:6px}
+.mrow b{font-weight:700}
+.mrow span{color:var(--muted)}
+.bar{height:10px;background:var(--card2);border-radius:8px;overflow:hidden}
+.bar div{height:100%;border-radius:8px;width:0;transition:width .6s ease}
+#pBar{background:var(--prot)}#fBar{background:var(--fat)}#cBar{background:var(--carb)}
+.snap{display:flex;align-items:center;justify-content:center;gap:12px;font-size:19px;padding:20px;border-radius:22px;margin-bottom:14px;box-shadow:0 8px 24px rgba(74,222,128,.25)}
+.meal{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.meal:last-child{border-bottom:0}
+.meal .ico{width:42px;height:42px;border-radius:14px;background:var(--card2);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+.meal .info{flex:1;min-width:0}
+.meal .nm{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meal .mc{font-size:12px;color:var(--muted);margin-top:2px}
+.meal .kc{font-weight:800;font-size:15px;color:var(--green)}
+.note{border-radius:18px;padding:14px 16px;margin-bottom:14px;font-size:14px;line-height:1.45}
+.note.report{background:#13251b;border:1px solid #1f4d33}
+.note.tip{background:var(--card);border:1px solid var(--line)}
+.note.boost{background:#271f10;border:1px solid #5a4417}
+.wrow{display:flex;gap:8px}
+.wrow input{flex:1;margin:0}
+.wrow button{width:auto;margin:0;padding:14px 20px;font-size:16px}
+#chart{width:100%;height:120px;display:block;margin:12px 0 6px}
 .hidden{display:none}
 #file{display:none}
-.wrow{display:flex;gap:8px}
-.wrow input{flex:1}
-.wrow button{width:auto;margin:6px 0;padding:12px 18px;font-size:16px}
-#chart{width:100%;height:120px;display:block;margin-top:8px}
 </style>
 </head>
 <body>
 
-<div id="setup" class="card hidden">
-<h1>Знакомство</h1>
+<div id="setup" class="hidden">
+<div class="top"><h1>Давай знакомиться</h1><div class="date">Это нужно один раз</div></div>
+<div class="card">
 <input id="name" placeholder="Имя">
 <select id="sex"><option value="m">Мужской</option><option value="f">Женский</option></select>
 <input id="age" type="number" placeholder="Возраст">
@@ -40,29 +70,45 @@ button.sec{background:#2a2e38;color:#fff;font-size:14px;padding:10px}
 <input id="key" placeholder="Ключ Gemini">
 <button onclick="saveSetup()">Начать</button>
 </div>
+</div>
 
 <div id="main" class="hidden">
-<h1 id="hello"></h1>
-<div class="card">
-<div class="ring" id="kcal">0</div>
+<div class="top"><h1 id="hello"></h1><div class="date" id="dateTxt"></div></div>
+
+<div class="card glow">
+<div class="ringwrap">
+<svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="52" fill="none" stroke-width="10"/><circle class="fg" id="ringFg" cx="60" cy="60" r="52" fill="none" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.7" stroke-dashoffset="326.7"/></svg>
+<div class="ringtxt"><div class="big" id="kcal">0</div><div class="small">ккал съедено</div></div>
+</div>
 <div class="sub" id="kcalSub"></div>
 </div>
-<div class="card">
-<div class="row"><span>Белки</span><span id="pTxt"></span></div><div class="bar"><div id="pBar"></div></div>
-<div class="row"><span>Жиры</span><span id="fTxt"></span></div><div class="bar"><div id="fBar"></div></div>
-<div class="row"><span>Углеводы</span><span id="cTxt"></span></div><div class="bar"><div id="cBar"></div></div>
-</div>
-<div class="card hidden" id="report"></div>
-<div class="card hidden" id="tip"></div>
-<div class="card hidden" id="boost"></div>
+
+<button class="snap" onclick="document.getElementById('file').click()"><span style="font-size:26px">📷</span> Сфотографировать еду</button>
 <input id="file" type="file" accept="image/*" capture="environment" onchange="onPhoto(this)">
-<button onclick="document.getElementById('file').click()">📷 Сфотографировать</button>
-<div class="card" style="margin-top:12px"><b>Вес</b>
+
+<div class="note report hidden" id="report"></div>
+<div class="note boost hidden" id="boost"></div>
+<div class="note tip hidden" id="tip"></div>
+
+<div class="card">
+<h2>Белки, жиры, углеводы</h2>
+<div class="macro"><div class="mrow"><b>Белки</b><span id="pTxt"></span></div><div class="bar"><div id="pBar"></div></div></div>
+<div class="macro"><div class="mrow"><b>Жиры</b><span id="fTxt"></span></div><div class="bar"><div id="fBar"></div></div></div>
+<div class="macro"><div class="mrow"><b>Углеводы</b><span id="cTxt"></span></div><div class="bar"><div id="cBar"></div></div></div>
+</div>
+
+<div class="card">
+<h2>Сегодня съедено</h2>
+<div id="meals"></div>
+</div>
+
+<div class="card">
+<h2>Мой вес</h2>
 <div class="wrow"><input id="wInput" type="number" step="0.1" placeholder="Вес сегодня, кг"><button onclick="addWeight()">Записать</button></div>
 <svg id="chart" viewBox="0 0 300 120" preserveAspectRatio="none"></svg>
 <div class="sub" id="wSub"></div>
 </div>
-<div class="card"><b>Сегодня</b><div id="meals"></div></div>
+
 <button class="sec" onclick="resetAll()">Сбросить всё</button>
 </div>
 
@@ -184,6 +230,20 @@ function setBar(id,txt,v,max){
  $(id+'Bar').style.width=Math.min(100,max?v/max*100:0)+'%';
 }
 
+function setRing(v,max){
+ const C=326.7;
+ const frac=max?Math.min(1,v/max):0;
+ $('ringFg').style.strokeDashoffset=C*(1-frac);
+}
+
+function mealIcon(time){
+ const h=parseInt(time);
+ if(h<11)return '🍳';
+ if(h<16)return '🍲';
+ if(h<21)return '🍝';
+ return '🥛';
+}
+
 function drawChart(d){
  const ws=(d.weights||[]).slice(-30);
  const svg=$('chart');
@@ -198,7 +258,8 @@ function drawChart(d){
   const py=112-(x.w-min)/(max-min)*(104);
   return px.toFixed(1)+','+py.toFixed(1);
  });
- svg.innerHTML='<polyline fill="none" stroke="#4ade80" stroke-width="2.5" points="'+pts.join(' ')+'"/>'+pts.map(p=>'<circle cx="'+p.split(',')[0]+'" cy="'+p.split(',')[1]+'" r="3" fill="#4ade80"/>').join('');
+ const area=pts.join(' ')+' '+pts[pts.length-1].split(',')[0]+',120 '+pts[0].split(',')[0]+',120';
+ svg.innerHTML='<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4ade80" stop-opacity=".35"/><stop offset="1" stop-color="#4ade80" stop-opacity="0"/></linearGradient></defs><polygon fill="url(#g)" points="'+area+'"/><polyline fill="none" stroke="#4ade80" stroke-width="2.5" stroke-linejoin="round" points="'+pts.join(' ')+'"/>'+pts.map(p=>'<circle cx="'+p.split(',')[0]+'" cy="'+p.split(',')[1]+'" r="3" fill="#4ade80"/>').join('');
  const diff=(vals[vals.length-1]-vals[0]).toFixed(1);
  $('wSub').textContent='Сейчас '+vals[vals.length-1]+' кг, изменение за период: '+(diff>0?'+':'')+diff+' кг'+(d.goal?', цель '+d.goal+' кг':'');
 }
@@ -210,12 +271,14 @@ function render(){
  const sum=k=>todays.reduce((s,m)=>s+(m[k]||0),0);
  const kc=sum('kcal'),p=sum('p'),f=sum('f'),c=sum('c');
  $('hello').textContent='Привет, '+d.name;
- $('kcal').textContent=kc+' ккал';
- $('meals').innerHTML=todays.map(m=>'<div class="meal">'+m.time+' — '+m.name+': '+m.kcal+' ккал (Б'+m.p+' Ж'+m.f+' У'+m.c+')</div>').join('')||'<div class="sub">Пока пусто</div>';
+ $('dateTxt').textContent=new Date().toLocaleDateString('ru',{weekday:'long',day:'numeric',month:'long'});
+ $('kcal').textContent=kc;
+ $('meals').innerHTML=todays.map(m=>'<div class="meal"><div class="ico">'+mealIcon(m.time)+'</div><div class="info"><div class="nm">'+m.name+'</div><div class="mc">'+m.time+' · Б'+m.p+' Ж'+m.f+' У'+m.c+'</div></div><div class="kc">'+m.kcal+'</div></div>').join('')||'<div class="sub">Пока пусто. Сфотографируй первый приём пищи.</div>';
  $('report').classList.add('hidden');$('tip').classList.add('hidden');$('boost').classList.add('hidden');
  drawChart(d);
  if(day<=3){
-  $('kcalSub').textContent='Режим наблюдения, день '+day+' из 3';
+  $('kcalSub').textContent='Режим наблюдения, день '+day+' из 3. Просто фотографируй всё, что ешь.';
+  setRing(0,0);
   setBar('p','Б '+p+' г',0,0);setBar('f','Ж '+f+' г',0,0);setBar('c','У '+c+' г',0,0);
   return;
  }
@@ -228,13 +291,14 @@ function render(){
  if(!d.reportShown){
   const diff=t.kcal-(d.observed||0);
   $('report').classList.remove('hidden');
-  $('report').innerHTML='<b>Итог наблюдения</b><br>За три дня ты ел в среднем '+(d.observed||'?')+' ккал. Для набора веса тебе нужно около '+t.kcal+' ккал в день. Не хватало примерно '+Math.max(0,diff)+' ккал.<br><button class="sec" onclick="closeReport()">Понятно</button>';
+  $('report').innerHTML='<b>Итог наблюдения</b><br>За три дня ты ел в среднем '+(d.observed||'?')+' ккал. Для набора веса тебе нужно около '+t.kcal+' ккал в день. Не хватало примерно '+Math.max(0,diff)+' ккал.<button class="sec" onclick="closeReport()">Понятно</button>';
  }
  if(d.boostMsg){
   $('boost').classList.remove('hidden');
-  $('boost').innerHTML=d.boostMsg+'<br><button class="sec" onclick="closeBoost()">Понятно</button>';
+  $('boost').innerHTML=d.boostMsg+'<button class="sec" onclick="closeBoost()">Понятно</button>';
  }
  const left=t.kcal-kc;
+ setRing(kc,t.kcal);
  $('kcalSub').textContent='Цель '+t.kcal+' ккал, осталось '+Math.max(0,left);
  setBar('p','Б '+p+' / '+t.p+' г',p,t.p);
  setBar('f','Ж '+f+' / '+t.f+' г',f,t.f);
@@ -243,10 +307,10 @@ function render(){
  if(left<=0)tip='Норма на сегодня выполнена. Отлично!';
  else{
   const lp=Math.max(0,t.p-p);
-  tip='Осталось '+left+' ккал'+(lp>0?' и около '+lp+' г белка':'')+'. Идея: ';
+  tip='<b>Что съесть сегодня</b><br>Осталось '+left+' ккал'+(lp>0?' и около '+lp+' г белка':'')+'. Идея: ';
   tip+=left>700?'полноценный приём пищи, например паста с курицей и оливковым маслом, плюс орехи и молочный коктейль.':left>300?'творог с бананом и мёдом или бутерброды с арахисовой пастой.':'горсть орехов или стакан молока с печеньем.';
  }
- $('tip').classList.remove('hidden');$('tip').textContent=tip;
+ $('tip').classList.remove('hidden');$('tip').innerHTML=tip;
 }
 
 function closeReport(){const d=load();d.reportShown=true;save(d);render()}
